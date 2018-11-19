@@ -1,0 +1,67 @@
+$bgHeight: 610px
+
+@mixin size($w, $h:$w, $bdrs:0)
+  width: $w
+  height: $h
+  border-radius: $bdrs
+
+@mixin flex($jc:center, $ai:center)
+  display: flex
+  justify-content: $jc
+  align-items: $ai
+
+@mixin thumbImg
+  width: 225px
+  height: auto
+
+[draggable="true"]
+  /* To prevent user selecting inside the drag source */
+  user-select: none
+  -moz-user-select: none
+  -webkit-user-select: none
+  -ms-user-select: none
+
+html, body
+  padding: 0
+  margin: 0
+
+.main-container
+  height: $bgHeight
+  background: #333 url('../images/background.jpg') center center no-repeat
+  background-size: cover
+  position: relative
+  .drop-image
+    position: absolute
+    img
+      +thumbImg
+
+footer
+  +flex(space-between, center)
+  height: calc(100vh - 610px)
+  aside
+    +flex
+    width: 20%
+    min-width: 200px
+  .gallery
+    width: 80%
+    max-width: calc(100vw - 200px)
+
+.scenes-table
+  border: 1px solid #333
+  border-radius: 3px
+  tr:not(:last-child)
+    border-bottom: 1px solid #999
+  td
+    padding: 6px 12px
+
+.swiper-container
+  width: 100%
+  max-width: calc(100% - 200px)
+  height: 100%
+  margin: 0
+
+  .swiper-slide
+    width: 225px
+
+img.thumb-img
+  +thumbImg

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.2/css/swiper.min.css">
+</head>
+
+<body>
+  <main id="dropArea" class="main-container">
+
+  </main>
+  <footer>
+    <aside>
+      <table class="scenes-table">
+        <tbody>
+          <tr>
+            <td>場景1</td>
+            <td>場景2</td>
+          </tr>
+          <tr>
+            <td>場景3</td>
+            <td>場景4</td>
+          </tr>
+          <tr>
+            <td>場景5</td>
+            <td>場景6</td>
+          </tr>
+          <tr>
+            <td>場景7</td>
+            <td>場景8</td>
+          </tr>
+        </tbody>
+      </table>
+    </aside>
+    <div class="gallery">
+      <div class="swiper-container">
+        <!-- Additional required wrapper -->
+        <div class="swiper-wrapper">
+          <!-- Slides -->
+          <div class="swiper-slide" data-id="1" draggable="true">
+            <img src="./src/images/yoona.jpg" alt="" class="thumb-img">
+          </div>
+          <div class="swiper-slide" data-id="2" draggable="true">
+            <img src="./src/images/happy.jpg" alt="" class="thumb-img">
+          </div>
+          <div class="swiper-slide" data-id="3" draggable="true">
+            <img src="./src/images/ame.jpg" alt="" class="thumb-img">
+          </div>
+          ...
+        </div>
+
+        <!-- If we need navigation buttons -->
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.2/js/swiper.min.js"></script>
+  <script src="./src/js/index.js"></script>
+</body>
+
+</html>
