@@ -1,12 +1,16 @@
+// import jquery
+import './import-jquery.js'
+
 // 載入 style
 import '../sass/style.sass'
 
 // 載入圖片檔
 import '../images/*.*'
 
-// load jQuery
-import jquery from 'jquery'
-export default (window.$ = window.jQuery = jquery)
+// 載入 Semantic-UI css
+import '../semantic/dist/semantic.min.css'
+// load Semantic-UI js
+import '../semantic/dist/semantic.min.js'
 
 var mySwiper = new Swiper('.swiper-container', {
   // Optional parameters
@@ -18,6 +22,14 @@ var mySwiper = new Swiper('.swiper-container', {
     nextEl: '.swiper-button-next',
     prevEl: '.swiper-button-prev',
   }
+})
+
+// 切換場景
+$('.js-scenes-table td').on('click', function (e) {
+  let target = e.currentTarget
+  let sceneId = $(target).data('id')
+  console.log('清除 mySwiper 內所有圖片')
+  console.log(`載入場景${sceneId}的圖片`)
 })
 
 function dragStart(e) {

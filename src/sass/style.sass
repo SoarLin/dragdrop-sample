@@ -36,27 +36,30 @@ html, body
       +thumbImg
 
 footer
-  +flex(space-between, center)
-  height: calc(100vh - 610px)
+  padding: 0
+  height: 250px
+  border-top: 1px solid #ccc
+
   aside
-    +flex
+    float: left
     width: 20%
     min-width: 200px
+    height: 100%
+    padding: 10px 20px
+    +flex
   .gallery
+    float: left
+    height: 100%
     width: 80%
     max-width: calc(100vw - 200px)
+    padding: 10px 0
 
-.scenes-table
-  border: 1px solid #333
-  border-radius: 3px
-  tr:not(:last-child)
-    border-bottom: 1px solid #999
+table.js-scenes-table
   td
-    padding: 6px 12px
+    cursor: pointer
 
 .swiper-container
   width: 100%
-  max-width: calc(100% - 200px)
   height: 100%
   margin: 0
 
