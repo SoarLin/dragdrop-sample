@@ -17,28 +17,34 @@ import '../semantic/dist/semantic.min.js'
 var SCENES = {
   '1': [{
       id: '1-1',
-      src: Images.yoona.jpg
+      src: Images.yoona.jpg,
+      used: false
     },
     {
       id: '1-2',
-      src: Images.happy.jpg
+      src: Images.happy.jpg,
+      used: false
     },
     {
       id: '1-3',
-      src: Images.ame.jpg
+      src: Images.ame.jpg,
+      used: false
     }
   ],
   '2': [{
       id: '2-1',
-      src: Images.iu1.jpg
+      src: Images.iu1.jpg,
+      used: false
     },
     {
       id: '2-2',
-      src: Images.iu2.jpg
+      src: Images.iu2.jpg,
+      used: false
     },
     {
       id: '2-3',
-      src: Images.iu3.jpg
+      src: Images.iu3.jpg,
+      used: false
     }
   ]
 }
@@ -107,6 +113,18 @@ class DragElement {
     })
   }
 
+  disabledOrigin() {
+    SCENES[CurrentSceneID].forEach((img) => {
+      if (img.id === this.id) {
+        img.used = true
+      }
+    })
+    $(`.swiper-slide[data-id="${this.id}"]`)
+      .addClass('dragged')
+      .removeAttr('draggable')
+      .unbind('dragstart')
+  }
+
   setAbsoultePosition(x, y) {
     this.drop.css({
       top: y,
@@ -159,10 +177,15 @@ class DropArea {
   dropped(e) {
     this.cancelDefault(e)
 
+    if (draging === undefined) return
+
     // clone 一份
     let cloneDrag = Object.assign(Object.create(Object.getPrototypeOf(draging)), draging)
     this.jqDOM.append(cloneDrag.drop)
-    cloneDrag.setAbsoultePosition(e.offsetX - cloneDrag.offsetX, e.offsetY - cloneDrag.offsetY)
+    let posX = e.originalEvent.clientX - cloneDrag.offsetX
+    let posY = e.originalEvent.clientY - cloneDrag.offsetY
+    cloneDrag.setAbsoultePosition(posX, posY)
+    cloneDrag.disabledOrigin()
 
     let isExist = this.elements.some((e) => {
       return this.isEquivalent(e, draging)
@@ -170,6 +193,7 @@ class DropArea {
     if (!isExist) {
       this.elements.push(cloneDrag)
     }
+    draging = undefined
   }
 
   cancelDefault(e) {
@@ -178,6 +202,8 @@ class DropArea {
     return false
   }
 }
+// 目前場景
+var CurrentSceneID = -1
 // 拖曳中物體(全域變數)
 var draging
 // 初始化被放置的區塊
@@ -189,31 +215,33 @@ function dragStart(e) {
   draging = new DragElement(id, e.offsetX, e.offsetY)
 }
 
-$('.swiper-slide').on('dragstart', dragStart)
+$('.swiper-slide:not(.dragged)').on('dragstart', dragStart)
 
 // 切換場景
 $('.js-scenes-table td').on('click', function (e) {
   let target = e.currentTarget
-  let clickSceneId = $(target).data('id')
+  CurrentSceneID = $(target).data('id')
 
-  if (SCENES[clickSceneId] !== undefined) {
+  if (SCENES[CurrentSceneID] !== undefined) {
     // console.log('清除 mySwiper 內所有圖片')
     mySwiper.removeAllSlides()
 
-    // console.log(`載入場景${clickSceneId}的圖片`)
-    SCENES[clickSceneId].forEach((img) => {
-      let slide = `<div class="swiper-slide" data-id="${img.id}" draggable="true">
+    // console.log(`載入場景${CurrentSceneID}的圖片`)
+    SCENES[CurrentSceneID].forEach((img) => {
+      let dragable = (!img.used) ? 'draggable="true"' : ''
+      let hasUsedClass = (img.used) ? 'dragged' : ''
+      let slide = `<div class="swiper-slide ${hasUsedClass}" data-id="${img.id}" ${dragable}>
             <img src="${img.src}" alt="" class="thumb-img">
           </div>`
       mySwiper.appendSlide(slide)
     })
     // 重新綁上拖曳事件
-    $('.swiper-slide').on('dragstart', dragStart)
+    $('.swiper-slide:not(.dragged)').on('dragstart', dragStart)
   }
 
   // sidebar未開啟 or 選到不同場景 => toggle
-  if (!sidebar.isOpen || sidebar.sceneId === clickSceneId) {
+  if (!sidebar.isOpen || sidebar.sceneId === CurrentSceneID) {
     sidebar.toggleClass()
   }
-  sidebar.replaceContent(clickSceneId)
+  sidebar.replaceContent(CurrentSceneID)
 })

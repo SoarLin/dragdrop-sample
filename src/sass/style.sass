@@ -36,16 +36,15 @@ footer
   padding: 0
   height: $footerHeight
   border-top: 1px solid #ccc
+  +flex(flex-start, center)
 
   aside
-    float: left
     width: 20%
     min-width: 200px
     height: 100%
     padding: 10px 20px
     +flex
   .gallery
-    float: left
     height: 100%
     width: 80%
     max-width: calc(100vw - 200px)
@@ -62,6 +61,10 @@ table.js-scenes-table
 
   .swiper-slide
     width: 225px
+    &.dragged
+      cursor: not-allowed
+      filter: grayscale(1)
+
 
 img.thumb-img
   +thumbImg
