@@ -182,8 +182,9 @@ class DropArea {
     // clone 一份
     let cloneDrag = Object.assign(Object.create(Object.getPrototypeOf(draging)), draging)
     this.jqDOM.append(cloneDrag.drop)
-    let posX = e.originalEvent.clientX - cloneDrag.offsetX
-    let posY = e.originalEvent.clientY - cloneDrag.offsetY
+    debugger
+    let posX = e.originalEvent.layerX - cloneDrag.offsetX
+    let posY = e.originalEvent.layerY - cloneDrag.offsetY
     cloneDrag.setAbsoultePosition(posX, posY)
     cloneDrag.disabledOrigin()
 
